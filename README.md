@@ -1,25 +1,9 @@
-# React Notes
+# React Notes - with websockets
 
-In this assignment, we make a google docs type web app that allows users to collaboratively edit a note board in real time!
+The readme for the original react notes project can be found here: https://github.com/dartmouth-cs52-21S/react-notes-william-toth
 
-[deployed url](https://epic-davinci-21f0f7.netlify.app/)
+Backend repo: https://github.com/william-toth/websocket-backend
 
-## What Worked Well
+Deployed app: https://notes-with-sockets.netlify.app/
 
-Once I got the hang of React, it was very useful and relatively easy to use. This assignment allowed me to see why React is one of the most popular web dev libraries, as it make it so easy to pass data between components of the app.
-
-## What Didn't
-
-After getting it, using Firebase was relatively straightforward, but it took me a long time to understand how react and the database actually interacted. I also had some cool ideas for extra credit (aside form the ones that I actually did) that, given my current web dev knowledge, were impossible to make work.
-
-## Extra Credit
-
-I did two major things for extra credit:
-
-1) z-index ordering. I did some z-index manipulation such that whichever note is dragged becomes on top (i.e highest z-index). This worked well, but the z-indexes get quite high. My fix for this is that when there are no notes on the board (i.e. all deleted), the max z-index goes to zero.
-
-2) clear all button. If the workspace and number of collaborators get very large, the user can hit 'clear notes', which deletes all notes. I thought this added a lot of practical functionality to the board.
-
-## Screenshots
-![](scr.gif)
-![](sc.png)
+Note: optimization for dragging didn't work very well due the structure of my original project (update sends all fields), so still looks slightly janky on the deployed app
