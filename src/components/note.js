@@ -88,7 +88,7 @@ class Note extends Component {
         handle=".drag"
         defaultPosition={{ x: 0, y: 0 }}
         position={{ x: this.props.note.x, y: this.props.note.y }}
-        grid={[10, 10]}
+        grid={[20, 20]}
         onDrag={this.handleDrag}
       >
         <div style={{ zIndex: this.props.note.zIndex }} className="note-holder">

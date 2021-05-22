@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import './style.scss';
+import io from 'socket.io-client';
 import AddNote from './components/insertnote';
 import Note from './components/note';
-import * as db from './services/datastore';
+// import * as db from './services/datastore';
+
+const socketserver = 'https://web-socket-backend.herokuapp.com/';
 
 const { Map } = require('immutable');
 
@@ -13,10 +16,19 @@ class App extends Component {
       notes: new Map(),
       maxZIndex: 0,
     };
+
+    this.socket = io(socketserver);
+    // this.socket.on('connect', () => { console.log('socket.io connected'); });
+    // this.socket.on('disconnect', () => { console.log('socket.io disconnected'); });
+    // this.socket.on('reconnect', () => { console.log('socket.io reconnected'); });
+    // this.socket.on('error', (error) => { console.log(error); });
   }
 
   componentDidMount() {
-    db.fetchNotes((notes) => {
+    // db.fetchNotes((notes) => {
+    //   this.setState({ notes: new Map(notes) });
+    // });
+    this.socket.on('notes', (notes) => {
       this.setState({ notes: new Map(notes) });
     });
   }
@@ -28,7 +40,8 @@ class App extends Component {
     const newNote = {
       title: t, text: '', x: 0, y: 0, zIndex: zIdx,
     };
-    db.getDB().ref('notes').push(newNote);
+    // db.getDB().ref('notes').push(newNote);
+    this.socket.emit('createNote', newNote);
   }
 
   // Function to delete a note (on firebase)
@@ -36,7 +49,8 @@ class App extends Component {
     if (this.state.notes.count() === 1) {
       this.setState({ maxZIndex: 0 });
     }
-    db.getDB().ref('notes').child(id).remove();
+    // db.getDB().ref('notes').child(id).remove();
+    this.socket.emit('deleteNote', id);
   }
 
   // Function to delete all notes
@@ -52,7 +66,8 @@ class App extends Component {
 
   // Function to update the map on firebase
   updateMap = (id, newNote) => {
-    db.getDB().ref('notes').child(id).update(newNote);
+    // db.getDB().ref('notes').child(id).update(newNote);
+    this.socket.emit('updateNote', id, newNote);
   }
 
   // Function to update the maximum z index
